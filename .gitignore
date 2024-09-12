@@ -203,7 +203,6 @@ Temporary Items
 *.vsix
 
 tests/
-data/
 
 anals/
 .vscode/

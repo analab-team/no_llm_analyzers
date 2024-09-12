@@ -1,12 +1,12 @@
 services:
-  base64_analyzer:
+  sqlinjection_analyzer:
     image: sqlinjection_analyzer:dev
     build:
       context: ..
       dockerfile: docker/Dockerfile
     container_name: sqlinjection_analyzer
     ports:
-      - "5055:5055/tcp"
+      - "5057:5057/tcp"
 
 networks:
   lighthouse_server:

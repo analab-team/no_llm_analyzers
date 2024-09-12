@@ -1,12 +1,12 @@
 services:
-  base64_analyzer:
+  link_analyzer:
     image: link_analyzer:dev
     build:
       context: ..
       dockerfile: docker/Dockerfile
     container_name: link_analyzer
     ports:
-      - "5055:5055/tcp"
+      - "5059:5059/tcp"
 
 networks:
   lighthouse_server:

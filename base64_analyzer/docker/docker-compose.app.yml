@@ -6,7 +6,7 @@ services:
       dockerfile: docker/Dockerfile
     container_name: base64_analyzer
     ports:
-      - "5055:5055/tcp"
+      - "5060:5060/tcp"
 
 networks:
   lighthouse_server:

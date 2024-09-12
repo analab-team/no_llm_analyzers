@@ -12,7 +12,7 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements/prod
 COPY ./app /app
 COPY ./.env /.env
 
-EXPOSE 5055
+EXPOSE 5059
 
 # Команда запуска по умолчанию
-CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5055"]
+CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5059"]

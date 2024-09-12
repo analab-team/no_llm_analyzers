@@ -1,5 +1,5 @@
 services:
-  base64_analyzer:
+  xss_analyzer:
     image: xss_analyzer:dev
     build:
       context: ..

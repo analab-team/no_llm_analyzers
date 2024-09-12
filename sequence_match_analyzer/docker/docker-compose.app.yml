@@ -1,12 +1,12 @@
 services:
-  base64_analyzer:
+  sequence_matcher_analyzer:
     image: sequence_matcher_analyzer:dev
     build:
       context: ..
       dockerfile: docker/Dockerfile
     container_name: sequence_matcher_analyzer
     ports:
-      - "5055:5055/tcp"
+      - "5058:5058/tcp"
 
 networks:
   lighthouse_server:

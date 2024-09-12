@@ -1,12 +1,12 @@
 services:
-  base64_analyzer:
+  word_match_analyzer:
     image: word_match_analyzer:dev
     build:
       context: ..
       dockerfile: docker/Dockerfile
     container_name: word_match_analyzer
     ports:
-      - "5055:5055/tcp"
+      - "5056:5056/tcp"
 
 networks:
   lighthouse_server:
