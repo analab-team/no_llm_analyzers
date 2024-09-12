@@ -1,0 +1,12 @@
+services:
+  base64_analyzer:
+    image: banword_analyzer:dev
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: banword_analyzer
+    ports:
+      - "5055:5055/tcp"
+
+networks:
+  lighthouse_server:

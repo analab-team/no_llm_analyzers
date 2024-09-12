@@ -1,0 +1,2 @@
+class AnalyzerAlreadyExists(Exception):
+    pass
