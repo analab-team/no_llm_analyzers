@@ -5,6 +5,8 @@ from pydantic_settings import BaseSettings
 
 class Config(BaseSettings):
     admin_api_key: str
+    
+    alerting_endpoint: str
 
     database: DatabaseConfig
 

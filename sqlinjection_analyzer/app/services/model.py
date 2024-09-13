@@ -3,7 +3,7 @@ from schemas.model_result import ModelResult, Reason
 import re
 import ast
 from typing import List, Tuple
-from py_find_injection import Checker
+# from py_find_injection import Checker
 import sqlparse
 
 
@@ -11,8 +11,6 @@ class SQLInjectionModel:
     """
     Анализатор для обнаружения SQL инъекций с использованием AST и эвристического анализа.
     """
-    def __init__(self) -> None:
-        self.checker = Checker("")
         
     def input_score(self, text: str, vault: Vault) -> ModelResult:
         metric, reasons = self.detect_sql_injection(text,
@@ -48,8 +46,8 @@ class SQLInjectionModel:
         Проверка на SQL инъекцию с использованием py-find-injection, эвристического анализа и sqlparse.
         """
         vulnerabilities = []
-        if vault.use_py_find_injection or vault.use_ast:
-            vulnerabilities.extend(self.analyze_with_py_find_injection(input_text))
+        # if vault.use_py_find_injection or vault.use_ast:
+        #     vulnerabilities.extend(self.analyze_with_py_find_injection(input_text))
         if vault.use_heuristics:
             vulnerabilities.extend(self.analyze_with_heuristics(input_text))
         if vault.use_sqlparse:
@@ -57,20 +55,20 @@ class SQLInjectionModel:
 
         return len(vulnerabilities), vulnerabilities
     
-    def analyze_with_py_find_injection(self, input_text: str) -> List[Reason]:
-        """
-        Использует py-find-injection для поиска SQL инъекций в коде.
-        """
-        vulnerabilities = []
-        try:
-            tree = ast.parse(input_text)
+    # def analyze_with_py_find_injection(self, input_text: str) -> List[Reason]:
+    #     """
+    #     Использует py-find-injection для поиска SQL инъекций в коде.
+    #     """
+    #     vulnerabilities = []
+    #     try:
+    #         tree = ast.parse(input_text)
             
-            self.checker.visit(tree)
-            for error in self.checker.errors:
-                vulnerabilities.append(Reason(start=error.lineno, stop=error.reason))
-        except Exception as e:
-            print(e)     
-        return vulnerabilities
+    #         self.checker.visit(tree)
+    #         for error in self.checker.errors:
+    #             vulnerabilities.append(Reason(start=error.lineno, stop=error.reason))
+    #     except Exception as e:
+    #         print(e)     
+    #     return vulnerabilities
 
     @staticmethod
     def analyze_with_heuristics(input_text: str) -> List[Reason]:

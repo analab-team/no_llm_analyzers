@@ -4,13 +4,19 @@ from crud.request_result import add_new_request_result, add_new_response_result
 from fastapi import APIRouter, Depends, HTTPException, status
 from models.product import Product
 from routers import verify_api_key
+
 from schemas.analyze import InputRequest, OutputRequest, OutputResponse
 from services.analyzer import Analyzer
 from services.vault_manager import Vault, vault_manager
+from services.alert_service import AlertingService
+from core.config import main_config
+from schemas.alert import Alert
 
 monitoring_router = APIRouter(prefix="/analyze")
 
 analyzers_service = Analyzer()
+
+alert_service = AlertingService(endpoint=main_config.alerting_endpoint)
 
 
 def get_vault_for_product(product: Product) -> Vault:
@@ -51,7 +57,14 @@ async def input(
         reasons=serialized_reasons,
         analyzer_name=input_request.analyzer_name,
     )
-
+    
+    if alert_service.endpoint is not None and result.reject_flg is True:
+        alert = Alert(
+            api_key=product.api_key,
+            analyzer_name=input_request.analyzer_name,
+            metric=result.metric,
+        )
+        alert_service.send_notification(alert)
 
 @monitoring_router.post(
     "/output",
@@ -83,5 +96,13 @@ async def output(
         reasons=serialized_reasons,
         analyzer_name=output_request.analyzer_name,
     )
+    
+    if alert_service.endpoint is not None and result.reject_flg is True:
+        alert = Alert(
+            api_key=product.api_key,
+            analyzer_name=output_request.analyzer_name,
+            metric=result.metric,
+        )
+        alert_service.send_notification(alert)
 
     return OutputResponse(reject_flg=result.reject_flg)
